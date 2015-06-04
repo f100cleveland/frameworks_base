@@ -206,6 +206,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         mSettingsButton.setOnClickListener(this);
 		mSettingsButton.setOnLongClickListener(this);
         mTaskManagerButton = findViewById(R.id.task_manager_button);
+        mTaskManagerButton.setOnLongClickListener(this);
         mQsDetailHeader = findViewById(R.id.qs_detail_header);
         mQsDetailHeader.setAlpha(0);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -650,8 +651,10 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             startForecastLongClickActivity();
         } else if (v == mMultiUserSwitch) {
             startUserLongClickActivity();
-        }
         vibrateheader(20);
+        } else if (v == mTaskManagerButton) {
+            startTaskManagerLongClickActivity();
+        }
         return false;
     }
 
@@ -721,6 +724,13 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.setClassName("com.cyanogenmod.lockclock",
             "com.cyanogenmod.lockclock.preference.Preferences");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
+    }
+
+    private void startTaskManagerLongClickActivity() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setClassName("com.android.settings",
+            "com.android.settings.Settings$RunningServicesActivity");
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
