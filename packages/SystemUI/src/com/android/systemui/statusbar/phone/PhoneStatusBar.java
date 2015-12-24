@@ -380,6 +380,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
     // task manager click state
     private boolean mShowTaskList = false;
 
+    private boolean mShow4G;
+
     // top bar
     StatusBarHeaderView mHeader;
     KeyguardStatusBarView mKeyguardStatusBar;
@@ -624,6 +626,17 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                             updateSpeedbump();
                             updateClearAll();
                             updateEmptyShadeView();
+			} else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SHOW_FOURG))) {
+                    mShow4G = Settings.System.getIntForUser(
+                            mContext.getContentResolver(),
+                            Settings.System.SHOW_FOURG,
+                            0, UserHandle.USER_CURRENT) == 1;
+                            recreateStatusBar();
+                            updateRowStates();
+                            updateSpeedbump();
+                            updateClearAll();
+                            updateEmptyShadeView();
             }
 
             update();
@@ -661,6 +674,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
                         Settings.System.NAVBAR_LEFT_IN_LANDSCAPE, 0) == 1;
                 mNavigationBarView.setLeftInLandscape(navLeftInLandscape);
             }
+			
+			boolean mShow4G = Settings.System.getIntForUser(resolver,
+                    Settings.System.SHOW_FOURG, 0, UserHandle.USER_CURRENT) == 1;
 			
 			mStatusBarHeaderMachine.updateEnablement();
             boolean showTaskManager = Settings.System.getIntForUser(resolver,
