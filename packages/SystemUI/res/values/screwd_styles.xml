@@ -21,5 +21,17 @@
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/status_bar_temp_text_color</item>
     </style>
+    
+    <style name="TextAppearance.StatusBar.Expanded.Date.White">
+        <item name="android:textSize">@dimen/qs_date_collapsed_size</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TextAppearance.StatusBar.Expanded.Weather">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
 
 </resources>
