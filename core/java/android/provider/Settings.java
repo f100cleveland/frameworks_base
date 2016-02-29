@@ -5051,6 +5051,12 @@ public final class Settings {
          * @hide
          */
         public static final String HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS = "hide_carrier_max_icons_number_of_notification_icons";
+		
+	/** Allow opening quick settings in floating window mode
+         *
+         * @hide
+         */
+        public static final String QS_FLOAT_MODE = "qs_float_mode";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
