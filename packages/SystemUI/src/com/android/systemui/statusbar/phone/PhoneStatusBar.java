@@ -3709,7 +3709,7 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         if (screwdLogo_static != null && screwdLogo_anim != null && mScrewdLogo == 1) {
             screwdLogo_static.setVisibility(View.VISIBLE);
 	    screwdLogo_anim.setVisibility(View.GONE);
-	    screwdAnimation.start();
+	    screwdAnimation.stop();
         } else if (screwdLogo_anim != null && screwdLogo_static !=null && mScrewdLogo == 2) {
             screwdLogo_static.setVisibility(View.GONE);
 	    screwdLogo_anim.setVisibility(View.VISIBLE);
@@ -3717,7 +3717,8 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 	} else if (screwdLogo_anim != null && screwdLogo_static !=null && mScrewdLogo == 0) {
             //user has disabled, make em both be gone!
 	    screwdLogo_anim.setVisibility(View.GONE);
-	    screwdLogo_static.setVisibility(View.GONE);	
+	    screwdLogo_static.setVisibility(View.GONE);
+	    screwdAnimation.stop();	
         }
 	
     }
