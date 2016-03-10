@@ -3174,15 +3174,6 @@ public final class Settings {
                 "notification_light_screen_on_enable";
 
         /**
-         * Whether we automatically generate notification LED colors or just
-         * use the boring default.
-         *
-         * @hide
-         */
-        public static final String NOTIFICATION_LIGHT_COLOR_AUTO =
-                "notification_light_color_auto";
-		
-		/**
          * Whether the notification LED should repeatedly flash when a notification is
          * pending. The value is boolean (1 or 0).
          * @hide

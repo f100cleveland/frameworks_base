@@ -180,9 +180,7 @@ public class ColorUtils {
         if (bitmap != null) {
             Palette p = Palette.generate(bitmap);
             color = findPerceptuallyNearestSolidColor(p.getVibrantColor(0)) & 0xFFFFFF;
-            if (!(drawable instanceof BitmapDrawable)) {
-                bitmap.recycle();
-            }
+            bitmap.recycle();
         }
 
         return color;
