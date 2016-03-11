@@ -17,7 +17,6 @@
 
 package com.android.server.pm;
 
-import static android.Manifest.permission.ACCESS_THEME_MANAGER;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_MEDIA_STORAGE;
