@@ -4619,6 +4619,12 @@ public final class Settings {
          * @hide
          */
         public static final String RECENT_CARD_TEXT_COLOR = "recent_card_text_color";
+		
+	    /*
+		 * show bluetooth icon only when connected
+         * @hide
+         */
+        public static final String SHOW_BLUETOOTH_ICON = "show_bluetooth_icon";
 
         /**
          * Recent app sidebar content
