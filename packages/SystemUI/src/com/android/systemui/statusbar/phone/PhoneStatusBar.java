@@ -1142,25 +1142,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
             mAssistManager = new AssistManager(this, context);
         }
 
+        mAssistManager = new AssistManager(this, context);
         if (mNavigationBarView == null) {
-            mNavigationBarView =
-                (NavigationBarView) View.inflate(context, R.layout.navigation_bar, null);
+            mAssistManager.onConfigurationChanged();
         }
-
-        mNavigationBarView.setBar(this);
-        mNavigationBarView.setOnVerticalChangedListener(
-                new NavigationBarView.OnVerticalChangedListener() {
-            @Override
-            public void onVerticalChanged(boolean isVertical) {
-                mNotificationPanel.setQsScrimEnabled(!isVertical);
-            }
-        });
-        mNavigationBarView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                checkUserAutohide(v, event);
-                return false;
-            }});
 
         // figure out which pixel-format to use for the status bar.
         mPixelFormat = PixelFormat.OPAQUE;
@@ -3874,16 +3859,10 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         // extract notifications.
         RankingMap rankingMap = mNotificationData.getRankingMap();
         int nNotifs = mNotificationData.size();
-        ArrayList<Pair<String, StatusBarNotification>> notifications = new ArrayList<>(nNotifs);
+        ArrayList<Pair<String, StatusBarNotification>> notifications =
+                new ArrayList<Pair<String, StatusBarNotification>>(nNotifs);
         copyNotifications(notifications, mNotificationData);
-        // now remove all the notification views since we'll be re-inflating these with the copied
-        // data
-        for (int i = 0; i < nNotifs; i++) {
-            final NotificationData.Entry entry = mNotificationData.get(i);
-            if (entry != null) {
-                removeNotificationViews(entry.key, rankingMap);
-            }
-        }
+        mNotificationData.clear();
 
         makeStatusBarView();
         repositionNavigationBar();
