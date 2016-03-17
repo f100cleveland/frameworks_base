@@ -4187,6 +4187,13 @@ public final class Settings {
          * @hide
          */
         public static final String TOAST_ICON = "toast_icon";
+		
+		/**
+         * Wether to show a headsup enable/disable button in status bar header
+         *
+         * @hide
+         */
+        public static final String HEADS_UP_SHOW_STATUS_BUTTON = "heads_up_show_status_button";
 
         /**
          * This preference enables showing the power menu on LockScreen.
