@@ -32,7 +32,7 @@ import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
-import android.provider.Settings.System;
+6import android.provider.Settings.System;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
