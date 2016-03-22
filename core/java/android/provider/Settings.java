@@ -4878,20 +4878,6 @@ public final class Settings {
          * @hide
          */
         public static final String INCREASING_RING_RAMP_UP_TIME = "increasing_ring_ramp_up_time";
-
-        /**
-         * Timeout for Heads Up
-         *
-         * @hide
-         */
-        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
-
-        /**
-         * Snooze time for heads up
-         *
-         * @hide
-         */
-        public static final String HEADS_UP_SNOOZE_LENGTH_MS = "heads_up_snooze_length_ms";
 		
 		/**
          * Which applications to disable heads up notifications in
