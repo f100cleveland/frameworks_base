@@ -342,6 +342,9 @@
     <string name="show_fourg_summary">Replaces LTE statusbar indicator with 4G</string>
     <string name="statusbar_tuner_category_title">Hide items from statusbar</string>
     
+    <!-- Screw'd Settings Tile -->
+    <string name="quick_settings_screwdsettings">Screw\'d Settings</string>
+    
      <!-- Statusbar Vibrate silent switch -->
     <string name="status_bar_vibsil">Vibrate &amp; silent</string>
 

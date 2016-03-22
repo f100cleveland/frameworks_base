@@ -53,6 +53,7 @@ import com.android.systemui.qs.tiles.PieTile;
 import com.android.systemui.qs.tiles.RebootTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
+import com.android.systemui.qs.tiles.ScrewdSettingsTile;
 import com.android.systemui.qs.tiles.ThemesTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.ScreenOffTile;
@@ -304,6 +305,7 @@ public class QSTileHost implements QSTile.Host, Tunable {
 		else if (tileSpec.equals("navbar")) return new NavBarTile(this);
 		else if (tileSpec.equals("pie")) return new PieTile(this);
 		else if (tileSpec.equals("lockscreen")) return  new LockscreenToggleTile(this);
+    	else if (tileSpec.equals("screwd_settings")) return new ScrewdSettingsTile(this);
         else if (tileSpec.startsWith(IntentTile.PREFIX)) return IntentTile.create(this,tileSpec);
         else throw new IllegalArgumentException("Bad tile spec: " + tileSpec);
     }
