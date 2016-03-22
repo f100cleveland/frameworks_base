@@ -214,4 +214,28 @@
   <java-symbol type="drawable" name="ic_lock_torch" />
   <java-symbol type="string" name="global_action_torch" />
 
+  <!-- Last app switch animations -->
+  <java-symbol type="anim" name="last_app_in" />
+  <java-symbol type="anim" name="last_app_out" />
+
+  <!-- Hardware key binding -->
+  <java-symbol type="integer" name="config_deviceHardwareKeys" />
+  
+  <java-symbol type="drawable" name="screwd_logo" />
+
+  <!-- Boot dexopt layout -->
+  <java-symbol type="drawable" name="dexopt_brand_logo" />
+  <java-symbol type="color" name="dexopt_background" />
+  <java-symbol type="color" name="dexopt_text" />
+  <java-symbol type="dimen" name="dexopt_icon_margin" />
+  <java-symbol type="dimen" name="dexopt_icon_size" />
+  <java-symbol type="dimen" name="dexopt_logo_size" />
+  <java-symbol type="dimen" name="dexopt_message" />
+  <java-symbol type="layout" name="boot_dexopt_layout" />
+  <java-symbol type="id" name="dexopt_icon" />
+  <java-symbol type="id" name="dexopt_message" />
+  <java-symbol type="id" name="dexopt_message_detail" />
+  <java-symbol type="id" name="dexopt_progress" />
+  
+
 </resources>
