@@ -93,11 +93,8 @@ public class RuntimeInit {
                 }
 
                 // Bring up crash dialog, wait for it to be dismissed
-                final IActivityManager mgr = ActivityManagerNative.getDefault();
-                if (mgr != null) {
-                    mgr.handleApplicationCrash(
-                            mApplicationObject, new ApplicationErrorReport.CrashInfo(e));
-                }
+                ActivityManagerNative.getDefault().handleApplicationCrash(
+                        mApplicationObject, new ApplicationErrorReport.CrashInfo(e));
             } catch (Throwable t2) {
                 try {
                     Clog_e(TAG, "Error reporting crash", t2);
