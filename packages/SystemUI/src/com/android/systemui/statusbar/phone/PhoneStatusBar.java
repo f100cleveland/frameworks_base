@@ -3830,10 +3830,6 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
         networkController.removeSignalCallback(signalCluster);
         networkController.removeSignalCallback(signalClusterKeyguard);
         networkController.removeSignalCallback(signalClusterQs);
-
-        if (signalCluster != null) signalCluster.setSecurityController(null);
-        if (signalClusterKeyguard != null) signalClusterKeyguard.setSecurityController(null);
-        if (signalClusterQs != null) signalClusterQs.setSecurityController(null);
     }
 
     private void recreateStatusBar() {
@@ -3841,19 +3837,9 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
 
         if (mNetworkController != null) {
             removeSignalCallbacks(mNetworkController);
-            if (mNetworkController.hasVoiceCallingFeature()) {
-                mNetworkController.removeEmergencyListener(mHeader);
-            }
         }
         if (mHeadsUpManager != null) {
             mHeadsUpManager.removeListener(mNotificationPanel);
-            mHeadsUpManager.removeListener(mScrimController);
-        }
-        if (mIconController != null) {
-            mIconController.cleanup();
-        }
-        if (mKeyguardIndicationController != null) {
-            mKeyguardIndicationController.cleanup();
         }
 
         mStatusBarWindow.removeContent(mStatusBarWindowContent);
