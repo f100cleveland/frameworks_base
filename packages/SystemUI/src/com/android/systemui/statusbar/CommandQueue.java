@@ -468,6 +468,7 @@ public class CommandQueue extends IStatusBar.Stub {
                     break;
                 case MSG_SET_AUTOROTATE_STATUS:
                     mCallbacks.setAutoRotate(msg.arg1 != 0);
+                    break;
                 case MSG_CAMERA_LAUNCH_GESTURE:
                     mCallbacks.onCameraLaunchGestureDetected(msg.arg1);
                     break;
