@@ -4960,6 +4960,12 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_SECURITY_ALPHA = "lockscreen_security_alpha";
+		
+		/**
+		 * Force heads up in all applications
+         * @hide
+         */
+        public static final String HEADS_UP_FORCE_ALL = "heads_up_force_all";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
