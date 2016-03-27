@@ -229,4 +229,7 @@
   <java-symbol type="id" name="dexopt_progress" />
   
 
+  <!-- BatteryLED fast charge -->
+  <java-symbol type="integer" name="config_chargingFastThreshold" />
+
 </resources>
