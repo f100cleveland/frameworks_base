@@ -4984,6 +4984,12 @@ public final class Settings {
          * @hide
          */
         public static final String HEADS_UP_FORCE_ALL = "heads_up_force_all";
+		
+		/**
+		 * Heads up timeout configuration
+         * @hide
+         */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
