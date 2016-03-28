@@ -352,19 +352,17 @@ public class PhoneStatusBarPolicy implements Callback {
         String contentDescription =
                 mContext.getString(R.string.accessibility_quick_settings_bluetooth_on);
         boolean bluetoothEnabled = false;
-        boolean bluetoothConnected = false;
         if (mBluetooth != null) {
             bluetoothEnabled = mBluetooth.isBluetoothEnabled();
-            bluetoothConnected = mBluetooth.isBluetoothConnected();
-            if (bluetoothConnected) {
+            if (mBluetooth.isBluetoothConnected()) {
                 iconId = R.drawable.stat_sys_data_bluetooth_connected;
                 contentDescription = mContext.getString(R.string.accessibility_bluetooth_connected);
             }
         }
 
         mService.setIcon(SLOT_BLUETOOTH, iconId, 0, contentDescription);
-        if (bluetoothConnected) {
-            mService.setIconVisibility(SLOT_BLUETOOTH, bluetoothEnabled);
+        if (mBluetooth.isBluetoothConnected()) {
+            mService.setIconVisibility(SLOT_BLUETOOTH, true);
         } else {
             mService.setIconVisibility(SLOT_BLUETOOTH, bluetoothEnabled && !mBluetoothIconVisible);
         }
