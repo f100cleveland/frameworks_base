@@ -4275,8 +4275,8 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CARRIER_COLOR = "status_bar_carrier_color";
 		
-		/**
-		 * Volume key controls ringtone or media sound stream
+	/**
+	 * Volume key controls ringtone or media sound stream
          *
          * @hide
          */
@@ -4287,6 +4287,13 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CUSTOM_HEADER = "status_bar_custom_header";
+		
+	/**
+         * Whether to apply a shadow on top of the header image
+         * value is the alpha value of the shadow image is 0 -> no shadow -> 255 black
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_SHADOW = "status_bar_custom_header_shadow";
 
         /**
          * Current active provider
@@ -4304,26 +4311,26 @@ public final class Settings {
          */
         public static final String STATUS_BAR_CUSTOM_HEADER_DEFAULT = "status_bar_custom_header_default";
 		
-		/**
-		 * Should the alarm be shown in fullscreen instead of heads-up
+	/**
+	 * Should the alarm be shown in fullscreen instead of heads-up
          *
          * @hide
          */
         public static final String SHOW_ALARM_FULLSCREEN = "show_alarm_fullscreen";
 		
-		/**
-		 * Boolean value whether to link ringtone and notification volume
+	/**
+	 * Boolean value whether to link ringtone and notification volume
          * @hide
          */
         public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
 		
-		/**
-		 * Boolean value whether volume down in silent can enter zen mode
+	/**
+	 * Boolean value whether volume down in silent can enter zen mode
          * @hide
          */
         public static final String VOLUME_DOWN_ZEN = "volume_down_zen";
 		
-		/**
+	/**
          * Boolean value whether volume up in zen mode can exit zen mode
          * @hide
          */
