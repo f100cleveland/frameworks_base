@@ -97,10 +97,13 @@ public class PhoneStatusBarView extends PanelBar {
     }
 
     private void updateVisibilities() {
+        boolean hideCarrier = Settings.System.getInt(getContext().getContentResolver(),
+                Settings.System.HIDE_CARRIER_MAX_ICONS, 0) == 1;
+
         if (mCarrierLabel != null) {
-            if (mShowCarrierLabel == 2) {
+            if (mShowCarrierLabel == 2 && !hideCarrier) {
                 mCarrierLabel.setVisibility(View.VISIBLE);
-            } else if (mShowCarrierLabel == 3) {
+            } else if (mShowCarrierLabel == 3 && !hideCarrier) {
                 mCarrierLabel.setVisibility(View.VISIBLE);
             } else {
                 mCarrierLabel.setVisibility(View.GONE);

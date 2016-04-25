@@ -21,7 +21,9 @@ import android.animation.ValueAnimator;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.database.ContentObserver;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -36,6 +38,7 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.NotificationColorUtil;
@@ -106,6 +109,9 @@ public class StatusBarIconController implements Tunable {
     private boolean mTransitionDeferring;
     private long mTransitionDeferringStartTime;
     private long mTransitionDeferringDuration;
+    
+    private TextView mCarrierLabel;
+    private int mCarrierLabelMode;
 
     private final ArraySet<String> mIconBlacklist = new ArraySet<>();
 
@@ -142,8 +148,15 @@ public class StatusBarIconController implements Tunable {
                 android.R.interpolator.fast_out_slow_in);
         mDarkModeIconColorSingleTone = context.getColor(R.color.dark_mode_icon_color_single_tone);
         mLightModeIconColorSingleTone = context.getColor(R.color.light_mode_icon_color_single_tone);
+        
+        mCarrierLabel = (TextView) statusBar.findViewById(R.id.statusbar_carrier_text);
         mHandler = new Handler();
+        SettingsObserver settingsObserver = new SettingsObserver(mHandler);
+        settingsObserver.observe();
+        
         updateResources();
+        carrierLabelVisibility();
+      
 
         mClock.setIconController(this);
         mCclock.setIconController(this);
@@ -182,6 +195,8 @@ public class StatusBarIconController implements Tunable {
         FontSizeUtils.updateFontSize(mClock, R.dimen.status_bar_clock_size);
         FontSizeUtils.updateFontSize(mCclock, R.dimen.status_bar_clock_size);
         FontSizeUtils.updateFontSize(mLeftClock, R.dimen.status_bar_clock_size);
+        
+        carrierLabelVisibility();
     }
 
     public void addSystemIcon(String slot, int index, int viewIndex, StatusBarIcon icon) {
@@ -266,6 +281,7 @@ public class StatusBarIconController implements Tunable {
         }
 
         applyNotificationIconsTint();
+        carrierLabelVisibility();
     }
 
     public void hideSystemIconArea(boolean animate) {
@@ -303,6 +319,7 @@ public class StatusBarIconController implements Tunable {
         if (clockLocation == 2 && mLeftClock != null) {
             mLeftClock.setVisibility(visible ? (showClock ? View.VISIBLE : View.GONE) : View.GONE);
         }
+        carrierLabelVisibility();
     }
 
     public void setClockAndDateStatus(int width, int mode, boolean enabled) {
@@ -311,6 +328,40 @@ public class StatusBarIconController implements Tunable {
         }
         mClockLocation = mode;
         mShowClock = enabled;
+    }
+    
+    public void carrierLabelVisibility() {
+        final ContentResolver resolver = mContext.getContentResolver();
+        
+        mCarrierLabelMode = Settings.System.getIntForUser(resolver,
+		Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
+
+        final boolean hideCarrier = Settings.System.getInt(resolver,
+                Settings.System.HIDE_CARRIER_MAX_ICONS, 0) == 1;
+
+        final int maxAllowedIcons = Settings.System.getInt(resolver,
+                Settings.System.HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS, 0);
+        
+        boolean forceHideByNumberOfIcons = false;
+        int currentVisibleNotificationIcons = 0;
+
+        if (mNotificationIcons != null) {
+            currentVisibleNotificationIcons = mNotificationIcons.getChildCount();
+        }
+        
+        if (mCarrierLabelMode == 2 || mCarrierLabelMode == 3) {
+	   if (hideCarrier && currentVisibleNotificationIcons >= maxAllowedIcons) {
+	      forceHideByNumberOfIcons = true;
+	   }
+        }
+        
+        if (mCarrierLabel != null) {
+	  if (forceHideByNumberOfIcons) {
+	      mCarrierLabel.setVisibility(View.GONE);
+	  } else {
+	      mCarrierLabel.setVisibility(View.VISIBLE);
+	  }
+        }
     }
 
     public void dump(PrintWriter pw) {
@@ -516,6 +567,7 @@ public class StatusBarIconController implements Tunable {
         refreshAllIconsForLayout(mStatusIcons);
         refreshAllIconsForLayout(mStatusIconsKeyguard);
         refreshAllIconsForLayout(mNotificationIcons);
+        carrierLabelVisibility();
     }
 
     public LinearLayout getStatusIcons() {
@@ -528,6 +580,38 @@ public class StatusBarIconController implements Tunable {
             View child = ll.getChildAt(n);
             if (child instanceof StatusBarIconView) {
                 ((StatusBarIconView) child).updateDrawable();
+            }
+        }
+    }
+	
+    public int getCurrentVisibleNotificationIcons() {
+        return mNotificationIcons.getChildCount();
+    }
+    
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.HIDE_CARRIER_MAX_ICONS),
+                    false, this, UserHandle.USER_CURRENT);     
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS),
+                    false, this, UserHandle.USER_CURRENT);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            
+            if (uri.equals(Settings.System.getUriFor(
+                Settings.System.HIDE_CARRIER_MAX_ICONS))
+                || uri.equals(Settings.System.getUriFor(
+                Settings.System.HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS))) {
+                carrierLabelVisibility();
             }
         }
     }
