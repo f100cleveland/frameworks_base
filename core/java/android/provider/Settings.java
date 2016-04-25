@@ -5032,6 +5032,25 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_WEATHER_ICON_PACK = "status_bar_weather_icon_pack";
+		
+	/**
+	 * Hide carrier label based on number of notification icons
+         * @hide
+         */
+         public static final String HIDE_CARRIER_MAX_ICONS = "hide_carrier_max_icons";
+		 
+	/**
+         * Hide the carrier label on the status bar when the notification icons will reach this number
+         * 1: 1 notification icon (always)
+         * 2: 2 notification icons
+         * 3: 3 notification icons
+         * 4: 4 notification icons
+         * 5: 5 notification icons
+         * 6: 6 notification icons
+         * default: 1
+         * @hide
+         */
+        public static final String HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS = "hide_carrier_max_icons_number_of_notification_icons";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
