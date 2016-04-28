@@ -299,4 +299,12 @@ interface IWindowManager
     Rect getAppMinimumViewRect();
     Rect getFloatViewRect();
     void notifyFloatActivityTouched(IBinder token, boolean force);
+        
+    /**
+     * Toggle global menu
+     *
+     * @hide
+     */
+    void toggleGlobalMenu();
+}
 }
