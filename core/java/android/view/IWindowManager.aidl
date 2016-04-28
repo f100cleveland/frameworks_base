@@ -307,4 +307,3 @@ interface IWindowManager
      */
     void toggleGlobalMenu();
 }
-}
