@@ -268,6 +268,7 @@ public interface MetricsConstants {
     public static final int NOTIFICATION_LIGHT_SETTINGS = 245;
     public static final int BATTERY_LIGHT_SETTINGS = 246;
 
+    public static final int QS_KERNEL = 247;
 
     // Lock screen weather settings
     public static final int LOCKSCREEN_WEATHER_SETTINGS = 248;
