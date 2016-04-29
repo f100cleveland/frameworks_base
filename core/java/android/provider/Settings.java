@@ -3794,11 +3794,6 @@ public final class Settings {
          * @hide
          */
         public static final String BATTERY_SAVER_MODE_COLOR = "battery_save_mode_color";
-
-        /**
-         * Boolean value on whether to show weather in the statusbar
-         */
-        public static final String STATUS_BAR_SHOW_WEATHER = "status_bar_show_weather";
 		
 		/**
          * Whether to show the weather info on the lock screen
