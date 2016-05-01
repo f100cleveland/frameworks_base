@@ -1,6 +1,5 @@
 /*
  * Copyright 2013 SlimRom
- * Copyright 2015 AICP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +19,12 @@ package com.android.systemui.shortcuts;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
 
-import com.android.internal.util.du.Helpers;
+import com.android.internal.util.slim.Action;
 
-public class RestartUI extends Activity  {
+public class Reboot extends Activity  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,16 @@ public class RestartUI extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-        Helpers.restartSystemUI();
+        Handler handle = new Handler();
+        // Allow statusbar to collapse if desired
+        handle.postDelayed(new Runnable() {
+            public void run() {
+                PowerManager pm =
+                        (PowerManager) Reboot.this.getSystemService(
+                        Context.POWER_SERVICE);
+                pm.reboot("");
+                Reboot.this.finish();
+            }
+        }, 500);
     }
 }

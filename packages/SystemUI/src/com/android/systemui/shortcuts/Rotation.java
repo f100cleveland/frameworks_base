@@ -1,6 +1,5 @@
 /*
  * Copyright 2013 SlimRom
- * Copyright 2015 AICP
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +17,12 @@
 package com.android.systemui.shortcuts;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.android.internal.util.du.Helpers;
+import com.android.internal.view.RotationPolicy;
 
-public class RestartUI extends Activity  {
+public class Rotation extends Activity  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,16 @@ public class RestartUI extends Activity  {
     @Override
     public void onResume() {
         super.onResume();
-        Helpers.restartSystemUI();
+        int value = getIntent().getIntExtra("value", 2);
+
+        boolean userRotation;
+        if (value == 2) {
+            userRotation = RotationPolicy.isRotationLocked(this);
+        } else {
+            userRotation = value == 1;
+        }
+
+        RotationPolicy.setRotationLock(this, !userRotation);
+        this.finish();
     }
 }
