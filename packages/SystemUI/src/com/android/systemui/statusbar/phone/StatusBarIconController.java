@@ -38,7 +38,6 @@ import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.internal.statusbar.StatusBarIcon;
 import com.android.internal.util.NotificationColorUtil;
@@ -335,12 +334,18 @@ public class StatusBarIconController implements Tunable {
         
         mCarrierLabelMode = Settings.System.getIntForUser(resolver,
 		Settings.System.STATUS_BAR_SHOW_CARRIER, 1, UserHandle.USER_CURRENT);
+		
+	boolean mUserDisabledStatusbarCarrier = false;
+	
+	if (mCarrierLabelMode == 0 || mCarrierLabelMode == 1) {
+	    mUserDisabledStatusbarCarrier = true;
+	}
 
-        final boolean hideCarrier = Settings.System.getInt(resolver,
+        boolean hideCarrier = Settings.System.getInt(resolver,
                 Settings.System.HIDE_CARRIER_MAX_ICONS, 0) == 1;
 
-        final int maxAllowedIcons = Settings.System.getInt(resolver,
-                Settings.System.HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS, 0);
+        int maxAllowedIcons = Settings.System.getInt(resolver,
+                Settings.System.HIDE_CARRIER_MAX_ICONS_NUMBER_OF_NOTIFICATION_ICONS, 1);
         
         boolean forceHideByNumberOfIcons = false;
         int currentVisibleNotificationIcons = 0;
@@ -349,18 +354,18 @@ public class StatusBarIconController implements Tunable {
             currentVisibleNotificationIcons = mNotificationIcons.getChildCount();
         }
         
-        if (mCarrierLabelMode == 2 || mCarrierLabelMode == 3) {
+	if (mCarrierLabelMode == 2 || mCarrierLabelMode == 3) {
 	   if (hideCarrier && currentVisibleNotificationIcons >= maxAllowedIcons) {
 	      forceHideByNumberOfIcons = true;
 	   }
         }
         
         if (mCarrierLabel != null) {
-	  if (forceHideByNumberOfIcons) {
-	      mCarrierLabel.setVisibility(View.GONE);
-	  } else {
-	      mCarrierLabel.setVisibility(View.VISIBLE);
-	  }
+	    if (!forceHideByNumberOfIcons && !mUserDisabledStatusbarCarrier ) {
+		mCarrierLabel.setVisibility(View.VISIBLE);
+	    } else {
+		mCarrierLabel.setVisibility(View.GONE);
+	    }
         }
     }
 
