@@ -7650,6 +7650,12 @@ public final class Settings {
           */
          public static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
 
+        /** Allow opening quick settings in floating window mode
+         *
+         * @hide
+         */
+        public static final String QS_FLOAT_MODE = "qs_float_mode";
+
         /** Whether to show the brightness slider in quick settings panel.
          *
          * @hide
