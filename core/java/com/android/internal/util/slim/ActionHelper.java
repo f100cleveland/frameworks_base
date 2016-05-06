@@ -241,6 +241,9 @@ public class ActionHelper {
         } else if (clickAction.equals(ActionConstants.ACTION_POWER_MENU)) {
             resId = systemUiResources.getIdentifier(
                         SYSTEMUI_METADATA_NAME + ":drawable/ic_sysbar_power_menu", null, null);
+        } else if (clickAction.equals(ActionConstants.ACTION_TORCH)) {
+            resId = systemUiResources.getIdentifier(
+                        SYSTEMUI_METADATA_NAME + ":drawable/ic_sysbar_torch2", null, null);
         } else if (clickAction.equals(ActionConstants.ACTION_VIB)) {
             resId = systemUiResources.getIdentifier(
                         SYSTEMUI_METADATA_NAME + ":drawable/ic_sysbar_vib", null, null);
