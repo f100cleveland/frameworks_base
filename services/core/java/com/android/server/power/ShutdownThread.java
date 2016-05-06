@@ -202,7 +202,7 @@ public final class ShutdownThread extends Thread {
             final Context uiContext = getUiContext(context);
 
             final boolean instant = Settings.Secure.getInt(context.getContentResolver(),
-                    Settings.Secure.ADVANCED_REBOOT_ONECLICK, 1) == 1;
+                    Settings.Secure.ADVANCED_REBOOT_ONECLICK, 0) == 1;
 
             if (sConfirmDialog != null) {
                 sConfirmDialog.dismiss();
