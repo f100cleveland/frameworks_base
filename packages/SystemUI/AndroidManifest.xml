@@ -150,6 +150,7 @@
 
     <!-- Weather -->
     <uses-permission android:name="com.cyanogenmod.lockclock.permission.READ_WEATHER" />
+    <uses-permission android:name="org.omnirom.omnijaws.READ_WEATHER" />
     
      <!-- Themes tile -->
     <uses-permission android:name="android.permission.ACCESS_THEME_MANAGER" />
