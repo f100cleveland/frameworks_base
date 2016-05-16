@@ -571,6 +571,12 @@ final class DefaultPermissionGrantPolicy {
                     && doesPackageSupportRuntimePermissions(musicPackage)) {
                 grantRuntimePermissionsLPw(musicPackage, STORAGE_PERMISSIONS, userId);
             }
+             // OmniJAWS
+            PackageParser.Package omnijawsPackage = getDefaultProviderAuthorityPackageLPr(
+                    "org.omnirom.omnijaws", userId);
+            if (omnijawsPackage != null) {
+		grantRuntimePermissionsLPw(omnijawsPackage, LOCATION_PERMISSIONS, userId);
+            }
 
             // Google Account
             PackageParser.Package googleaccountPackage = getDefaultProviderAuthorityPackageLPr(
