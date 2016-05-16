@@ -571,6 +571,22 @@ final class DefaultPermissionGrantPolicy {
                     && doesPackageSupportRuntimePermissions(musicPackage)) {
                 grantRuntimePermissionsLPw(musicPackage, STORAGE_PERMISSIONS, userId);
             }
+
+            // Chromium
+            PackageParser.Package chromiumPackage = getDefaultProviderAuthorityPackageLPr(
+                    "org.chromium.chrome", userId);
+            if (chromiumPackage != null) {
+                grantRuntimePermissionsLPw(chromiumPackage, CONTACTS_PERMISSIONS, userId);
+            }
+            
+            // cLock
+            PackageParser.Package cLockPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.cyanogenmod.lockclock", userId);
+            if (cLockPackage != null) {
+                grantRuntimePermissionsLPw(cLockPackage, CALENDAR_PERMISSIONS, userId);
+		grantRuntimePermissionsLPw(cLockPackage, LOCATION_PERMISSIONS, userId);
+            }
+            
              // OmniJAWS
             PackageParser.Package omnijawsPackage = getDefaultProviderAuthorityPackageLPr(
                     "org.omnirom.omnijaws", userId);
@@ -614,15 +630,74 @@ final class DefaultPermissionGrantPolicy {
                 grantRuntimePermissionsLPw(gmscorePackage, SMS_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(gmscorePackage, STORAGE_PERMISSIONS, userId);
             }
-			
-			// Chromium
-            PackageParser.Package chromiumPackage = getDefaultProviderAuthorityPackageLPr(
-                    "org.chromium.chrome", userId);
-            if (chromiumPackage != null) {
-                grantRuntimePermissionsLPw(chromiumPackage, CONTACTS_PERMISSIONS, userId);
+
+			// Google Connectivity Services
+            PackageParser.Package gcsPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.apps.gcs", userId);
+            if (gcsPackage != null) {
+                grantRuntimePermissionsLPw(gcsPackage, CONTACTS_PERMISSIONS, userId);
                 grantRuntimePermissionsLPw(gcsPackage, LOCATION_PERMISSIONS, userId);
             }
 
+			// Google Contacts Sync
+            PackageParser.Package googlecontactssyncPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.syncadapters.contacts", userId);
+            if (googlecontactssyncPackage != null) {
+                grantRuntimePermissionsLPw(googlecontactssyncPackage, CONTACTS_PERMISSIONS, userId);
+            }			
+
+			// Google Backup Transport
+            PackageParser.Package googlebackuptransportPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.backuptransport", userId);
+            if (googlebackuptransportPackage != null) {
+                grantRuntimePermissionsLPw(googlebackuptransportPackage, CONTACTS_PERMISSIONS, userId);
+            }			
+			
+			// Google Play Framework
+            PackageParser.Package gsfcorePackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.gsf", userId);
+            if (gsfcorePackage != null) {
+                grantRuntimePermissionsLPw(gsfcorePackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gsfcorePackage, PHONE_PERMISSIONS, userId);
+            }		
+
+			// Google Setup Wizard
+            PackageParser.Package setupwizardPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.setupwizard", userId);
+            if (setupwizardPackage != null) {
+                grantRuntimePermissionsLPw(setupwizardPackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(setupwizardPackage, PHONE_PERMISSIONS, userId);
+            }	
+
+			// Google Play Store
+            PackageParser.Package vendingPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.android.vending", userId);
+            if (vendingPackage != null) {
+                grantRuntimePermissionsLPw(vendingPackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(vendingPackage, PHONE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(vendingPackage, LOCATION_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(vendingPackage, SMS_PERMISSIONS, userId);
+            }	
+				
+            // Android Wear Home
+            if (mService.hasSystemFeature(PackageManager.FEATURE_WATCH)) {
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory(Intent.CATEGORY_HOME_MAIN);
+
+                PackageParser.Package wearHomePackage = getDefaultSystemHandlerActivityPackageLPr(
+                        homeIntent, userId);
+
+                if (wearHomePackage != null
+                        && doesPackageSupportRuntimePermissions(wearHomePackage)) {
+                    grantRuntimePermissionsLPw(wearHomePackage, CONTACTS_PERMISSIONS, false,
+                            userId);
+                    grantRuntimePermissionsLPw(wearHomePackage, PHONE_PERMISSIONS, true, userId);
+                    grantRuntimePermissionsLPw(wearHomePackage, MICROPHONE_PERMISSIONS, false,
+                            userId);
+                    grantRuntimePermissionsLPw(wearHomePackage, LOCATION_PERMISSIONS, false,
+                            userId);
+                }
+            }
 
             mService.mSettings.onDefaultRuntimePermissionsGrantedLPr(userId);
         }
@@ -631,7 +706,10 @@ final class DefaultPermissionGrantPolicy {
     private void grantDefaultPermissionsToDefaultSystemDialerAppLPr(
             PackageParser.Package dialerPackage, int userId) {
         if (doesPackageSupportRuntimePermissions(dialerPackage)) {
-            grantRuntimePermissionsLPw(dialerPackage, PHONE_PERMISSIONS, userId);
+            boolean isPhonePermFixed =
+                    mService.hasSystemFeature(PackageManager.FEATURE_WATCH);
+            grantRuntimePermissionsLPw(
+                    dialerPackage, PHONE_PERMISSIONS, isPhonePermFixed, userId);
             grantRuntimePermissionsLPw(dialerPackage, CONTACTS_PERMISSIONS, userId);
             grantRuntimePermissionsLPw(dialerPackage, SMS_PERMISSIONS, userId);
             grantRuntimePermissionsLPw(dialerPackage, MICROPHONE_PERMISSIONS, userId);
@@ -860,8 +938,8 @@ final class DefaultPermissionGrantPolicy {
 
                     mService.grantRuntimePermission(pkg.packageName, permission, userId);
                     if (DEBUG) {
-                        Log.i(TAG, "Granted " + permission + " to default handler "
-                                + pkg.packageName);
+                        Log.i(TAG, "Granted " + (systemFixed ? "fixed " : "not fixed ")
+                                + permission + " to default handler " + pkg.packageName);
                     }
 
                     int newFlags = PackageManager.FLAG_PERMISSION_GRANTED_BY_DEFAULT;
@@ -871,6 +949,19 @@ final class DefaultPermissionGrantPolicy {
 
                     mService.updatePermissionFlags(permission, pkg.packageName,
                             newFlags, newFlags, userId);
+                }
+
+                // If a component gets a permission for being the default handler A
+                // and also default handler B, we grant the weaker grant form.
+                if ((flags & PackageManager.FLAG_PERMISSION_GRANTED_BY_DEFAULT) != 0
+                        && (flags & PackageManager.FLAG_PERMISSION_SYSTEM_FIXED) != 0
+                        && !systemFixed) {
+                    if (DEBUG) {
+                        Log.i(TAG, "Granted not fixed " + permission + " to default handler "
+                                + pkg.packageName);
+                    }
+                    mService.updatePermissionFlags(permission, pkg.packageName,
+                            PackageManager.FLAG_PERMISSION_SYSTEM_FIXED, 0, userId);
                 }
             }
         }
@@ -884,7 +975,7 @@ final class DefaultPermissionGrantPolicy {
             return false;
         }
         PackageSetting sysPkg = mService.mSettings.getDisabledSystemPkgLPr(pkg.packageName);
-        if (sysPkg != null) {
+        if (sysPkg != null && sysPkg.pkg != null) {
             if ((sysPkg.pkg.applicationInfo.flags & ApplicationInfo.FLAG_PERSISTENT) == 0) {
                 return false;
             }
