@@ -614,6 +614,7 @@ final class DefaultPermissionGrantPolicy {
                     "org.chromium.chrome", userId);
             if (chromiumPackage != null) {
                 grantRuntimePermissionsLPw(chromiumPackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gcsPackage, LOCATION_PERMISSIONS, userId);
             }
 
 
