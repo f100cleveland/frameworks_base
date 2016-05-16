@@ -310,7 +310,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             updatePieControls(!pieEnabled);
         }
     };
-	
+
 
     private ArrayList<String> mDndList = new ArrayList<String>();
     private ArrayList<String> mBlacklist = new ArrayList<String>();
@@ -1165,7 +1165,9 @@ public abstract class BaseStatusBar extends SystemUI implements
                     launchFloating(contentIntent);
                 }
             });
-            filterButton.setVisibility(View.VISIBLE);
+            Notification notification = sbn.getNotification();
+            filterButton.setVisibility(SpamFilter.hasFilterableContent(notification)
+                    ? View.VISIBLE : View.GONE);
             filterButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     AsyncTask.execute(new Runnable() {
@@ -1194,7 +1196,7 @@ public abstract class BaseStatusBar extends SystemUI implements
                     launchFloating(contentIntent);
                 }
             });
-			
+
 			final Intent appSettingsQueryIntent
                     = new Intent(Intent.ACTION_MAIN)
                     .addCategory(Notification.INTENT_CATEGORY_NOTIFICATION_PREFERENCES)
@@ -2722,8 +2724,8 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         return lp;
     }
-	
-	
+
+
 
     Runnable mKillTask = new Runnable() {
         public void run() {
@@ -2877,7 +2879,7 @@ public abstract class BaseStatusBar extends SystemUI implements
             }
         }
     }
-	
+
 	protected void addAppCircleSidebar() {
         if (mAppCircleSidebar == null) {
             mAppCircleSidebar = (AppCircleSidebar) View.inflate(mContext, R.layout.app_circle_sidebar, null);
