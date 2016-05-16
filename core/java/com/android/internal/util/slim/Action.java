@@ -53,6 +53,8 @@ import java.net.URISyntaxException;
 
 public class Action {
 
+    private static boolean mTorchEnabled = false;
+
     private static final int MSG_INJECT_KEY_DOWN = 1066;
     private static final int MSG_INJECT_KEY_UP = 1067;
 
